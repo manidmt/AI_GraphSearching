@@ -5,6 +5,18 @@
 
 #include <list>
 
+struct stateN0{
+  ubicacion jugador;
+  ubicacion colaborador;
+  Action ultimaOrdenColaborador;
+
+  bool operator==(const stateN0 &x) const{
+    
+    return (jugador == x.jugador &&
+            colaborador.f == x.colaborador.f &&
+            colaborador.c == x.colaborador.c);
+  }
+};
 
 class ComportamientoJugador : public Comportamiento {
   public:
@@ -23,11 +35,10 @@ class ComportamientoJugador : public Comportamiento {
 
   private:
     // Declarar Variables de Estado
-
-
-
-
-
+    list<Action> plan;
+    bool hayPlan;
+    stateN0 c_state;
+    ubicacion goal;
 };
 
 #endif
