@@ -18,6 +18,27 @@ struct stateN0{
   }
 };
 
+//Definición del tipo nodo del nivel 0
+struct nodoN0{
+  stateN0 st;
+  list<Action> secuencia;
+
+  bool operator==(const nodoN0& n) const {return (st == n.st);}
+
+  bool operator<(const nodoN0& b) const {
+      if (st.jugador.f < b.st.jugador.f)                        
+          return true;
+      else if (st.jugador.f == b.st.jugador.f and st.jugador.c < b.st.jugador.c) 
+          return true;
+      else if (st.jugador.f == b.st.jugador.f and st.jugador.c == b.st.jugador.c and st.jugador.brujula < b.st.jugador.brujula)  
+          return true;
+            
+      else                                                      
+          return false;
+  }
+};
+
+
 class ComportamientoJugador : public Comportamiento {
   public:
     ComportamientoJugador(unsigned int size) : Comportamiento(size) {
@@ -28,6 +49,8 @@ class ComportamientoJugador : public Comportamiento {
     }
     ComportamientoJugador(const ComportamientoJugador & comport) : Comportamiento(comport){}
     ~ComportamientoJugador(){}
+
+    void VisualizaPlan(const stateN0 &st, const list<Action> &plan);
 
     Action think(Sensores sensores);
     int interact(Action accion, int valor);
