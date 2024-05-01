@@ -52,6 +52,7 @@ class ComportamientoJugador : public Comportamiento {
 
     void VisualizaPlan(const stateN0 &st, const list<Action> &plan);
 
+    bool ColaboradorCerca(const stateN0 &st);
     Action think(Sensores sensores);
     int interact(Action accion, int valor);
 
