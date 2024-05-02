@@ -14,7 +14,9 @@ struct stateN0{
     
     return (jugador == x.jugador &&
             colaborador.f == x.colaborador.f &&
-            colaborador.c == x.colaborador.c);
+            colaborador.c == x.colaborador.c &&
+            colaborador.brujula == x.colaborador.brujula &&
+            ultimaOrdenColaborador == x.ultimaOrdenColaborador);
   }
 };
 
@@ -39,6 +41,35 @@ struct nodoN0{
 };
 
 
+struct nodoN1{
+
+  stateN0 st;
+  list<Action> secuencia;
+
+  bool operator==(const nodoN1& n) const {return (st == n.st);}
+
+  bool operator<(const nodoN1 &n) const
+  {
+    if (st.jugador.f < n.st.jugador.f)
+      return true;
+    else if (st.jugador.f == n.st.jugador.f && st.jugador.c < n.st.jugador.c)
+      return true;
+    else if (st.jugador.f == n.st.jugador.f && st.jugador.c == n.st.jugador.c && st.jugador.brujula < n.st.jugador.brujula)
+      return true;
+    else if (st.jugador.f == n.st.jugador.f && st.jugador.c == n.st.jugador.c && st.jugador.brujula == n.st.jugador.brujula && st.colaborador.f < n.st.colaborador.f)
+      return true;
+    else if (st.jugador.f == n.st.jugador.f && st.jugador.c == n.st.jugador.c && st.jugador.brujula == n.st.jugador.brujula && st.colaborador.f == n.st.colaborador.f && st.colaborador.c < n.st.colaborador.c)
+      return true;
+    else if (st.jugador.f == n.st.jugador.f && st.jugador.c == n.st.jugador.c && st.jugador.brujula == n.st.jugador.brujula && st.colaborador.f == n.st.colaborador.f && st.colaborador.c == n.st.colaborador.c && st.colaborador.brujula < n.st.colaborador.brujula)
+      return true;
+    else if (st.jugador.f == n.st.jugador.f && st.jugador.c == n.st.jugador.c && st.jugador.brujula == n.st.jugador.brujula && st.colaborador.f == n.st.colaborador.f && st.colaborador.c == n.st.colaborador.c && st.colaborador.brujula == n.st.colaborador.brujula && st.ultimaOrdenColaborador < n.st.ultimaOrdenColaborador)
+      return true;
+    else
+      return false;
+  }
+};
+
+
 class ComportamientoJugador : public Comportamiento {
   public:
     ComportamientoJugador(unsigned int size) : Comportamiento(size) {
@@ -51,6 +82,8 @@ class ComportamientoJugador : public Comportamiento {
     ~ComportamientoJugador(){}
 
     void VisualizaPlan(const stateN0 &st, const list<Action> &plan);
+
+    list<Action> AnchuraColaborador(const stateN0 &inicio, const ubicacion &final, const vector<vector<unsigned char>> &mapa);
 
     bool ColaboradorCerca(const stateN0 &st);
     Action think(Sensores sensores);
