@@ -69,6 +69,69 @@ struct nodoN1{
   }
 };
 
+struct stateN2{
+
+  ubicacion jugador;
+  ubicacion colaborador;
+  Action ultimaOrdenColaborador;
+
+  bool bikini;
+  bool zapatillas;
+
+  bool operator==(const stateN2 &x) const{
+
+    return (jugador == x.jugador &&
+            colaborador.f == x.colaborador.f &&
+            colaborador.c == x.colaborador.c &&
+            bikini == x.bikini && zapatillas == x.zapatillas);
+  }
+
+  bool operator<(const stateN2 &x) const{
+
+    if (jugador.f < x.jugador.f)
+      return true;
+    else if (jugador.f == x.jugador.f && jugador.c < x.jugador.c)
+      return true;
+    else if (jugador.f == x.jugador.f && jugador.c == x.jugador.c && bikini < x.bikini)
+      return true;
+    else if (jugador.f == x.jugador.f && jugador.c == x.jugador.c && bikini == x.bikini && zapatillas < x.zapatillas)
+      return true;
+    else
+      return false;
+  }
+};
+
+struct nodoN2{
+
+  stateN2 st;
+  list<Action> secuencia;
+  int coste_acumulado = 0;
+
+  bool operator==(const nodoN2& n) const {return (st == n.st);}
+
+  // bool operator<(const nodoN2 &x) const{
+
+  //   if (st.jugador.f < x.st.jugador.f)
+  //     return true;
+  //   else if (st.jugador.f == x.st.jugador.f && st.jugador.c < x.st.jugador.c)
+  //     return true;
+  //   else if (st.jugador.f == x.st.jugador.f && st.jugador.c == x.st.jugador.c && st.bikini < x.st.bikini)
+  //     return true;
+  //   else if (st.jugador.f == x.st.jugador.f && st.jugador.c == x.st.jugador.c && st.bikini == x.st.bikini && st.zapatillas < x.st.zapatillas)
+  //     return true;
+  //   else
+  //     return false;
+  // }
+  bool operator<(const nodoN2 &n) const{
+
+    return (coste_acumulado > n.coste_acumulado);
+  }
+
+  bool operator>(const nodoN2 &n) const{
+    return (coste_acumulado > n.coste_acumulado);
+  }
+};
+
 
 class ComportamientoJugador : public Comportamiento {
   public:
